@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · Aleyna Yıldız</title>
+    <meta name="description" content="Aleyna Yıldız — Back-End Geliştirici. C#, .NET, Python, Django ve PostgreSQL ile üretim ortamına dokunan işler." />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <header class="site-header">
+        <nav class="container nav">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-mark">AY</span>
+                <span class="brand-name">Aleyna Yıldız</span>
+            </a>
+            <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                <li><a asp-controller="Home" asp-action="About">Hakkımda</a></li>
+                <li><a asp-controller="Home" asp-action="Projects">Projeler</a></li>
+                <li><a href="@PortfolioData.Github" target="_blank" rel="noopener" class="nav-cta">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© @DateTime.Now.Year Aleyna Yıldız · Backend Developer</p>
+            <div class="socials">
+                <a href="@PortfolioData.Github" target="_blank" rel="noopener">GitHub</a>
+                <a href="@PortfolioData.LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="@PortfolioData.Medium" target="_blank" rel="noopener">Medium</a>
+                <a href="mailto:@PortfolioData.Email">E-posta</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

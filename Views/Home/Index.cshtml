@@ -1,0 +1,70 @@
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">// backend developer</span>
+        <h1 class="hero-title">
+            Merhaba, ben <span class="grad">Aleyna Yıldız</span>.
+        </h1>
+        <p class="hero-sub">
+            C#, .NET ve Python ile <strong>üretim ortamına dokunan</strong> backend işler
+            yapmayı seven bir bilgisayar mühendisliği son sınıf öğrencisiyim.
+        </p>
+        <div class="hero-cta">
+            <a asp-controller="Home" asp-action="Projects" class="btn btn-primary">Projelerimi Gör</a>
+            <a href="@PortfolioData.Github" target="_blank" rel="noopener" class="btn btn-ghost">GitHub'da Takip Et</a>
+        </div>
+        <div class="hero-meta">
+            <span>📍 @PortfolioData.Location</span>
+            <span>✉ @PortfolioData.Email</span>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <div class="terminal">
+            <div class="terminal-bar">
+                <span></span><span></span><span></span>
+                <p>~/aleyna — zsh</p>
+            </div>
+            <pre class="terminal-body"><code><span class="c-line">$ whoami</span>
+<span class="c-out">aleyna.yildiz</span>
+<span class="c-line">$ cat stack.txt</span>
+<span class="c-out">C# · .NET · ASP.NET · Windows Forms</span>
+<span class="c-out">Python · Django · DRF · Celery · Redis</span>
+<span class="c-out">PostgreSQL · MSSQL · JWT · Git</span>
+<span class="c-line">$ current --focus</span>
+<span class="c-out">production-grade backend systems</span>
+<span class="c-line">$ _</span></code></pre>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Öne Çıkan Yetenekler</h2>
+    <div class="skills-grid">
+        @foreach (var group in PortfolioData.Skills)
+        {
+            <article class="skill-card">
+                <h3>@group.Key</h3>
+                <ul>
+                    @foreach (var s in group.Value)
+                    {
+                        <li>@s</li>
+                    }
+                </ul>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section">
+    <div class="cta-block">
+        <div>
+            <h2>Kodlarımı incelemek ister misin?</h2>
+            <p>Tüm projelerime GitHub üzerinden ulaşabilirsin.</p>
+        </div>
+        <a href="@PortfolioData.Github" target="_blank" rel="noopener" class="btn btn-primary">GitHub Profili →</a>
+    </div>
+</section>

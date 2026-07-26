@@ -1,0 +1,44 @@
+@model List<AleynaPortfolio.Models.Project>
+@{
+    ViewData["Title"] = "Projeler";
+}
+
+<section class="page-head">
+    <span class="eyebrow">// projeler</span>
+    <h1>Neler geliştirdim?</h1>
+    <p class="page-sub">Backend odaklı, üretim mantığıyla kurgulanmış seçili projeler. Tüm depolara <a href="@PortfolioData.Github" target="_blank" rel="noopener">GitHub profilim</a> üzerinden ulaşabilirsin.</p>
+</section>
+
+<div class="projects-grid">
+    @foreach (var p in Model)
+    {
+        <article class="project-card">
+            <header>
+                <h2>@p.Name</h2>
+                <p class="tagline">@p.Tagline</p>
+            </header>
+            <p class="desc">@p.Description</p>
+            <ul class="tech-list">
+                @foreach (var t in p.Tech)
+                {
+                    <li>@t</li>
+                }
+            </ul>
+            <footer>
+                <a href="@p.RepoUrl" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">
+                    GitHub'da Gör →
+                </a>
+            </footer>
+        </article>
+    }
+</div>
+
+<section class="section" style="text-align:center;">
+    <div class="cta-block" style="justify-content:center; text-align:center;">
+        <div>
+            <h2>Daha fazlası GitHub'da</h2>
+            <p>14+ depo, farklı diller ve deneysel projeler için profili ziyaret et.</p>
+        </div>
+        <a href="@PortfolioData.Github" target="_blank" rel="noopener" class="btn btn-primary">github.com/a1eynayildiz →</a>
+    </div>
+</section>

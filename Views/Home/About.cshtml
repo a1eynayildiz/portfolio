@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Hakkımda";
+}
+
+<section class="page-head">
+    <span class="eyebrow">// hakkımda</span>
+    <h1>Kimim, ne yapıyorum?</h1>
+</section>
+
+<section class="about-grid">
+    <article class="about-text">
+        <p>@PortfolioData.About</p>
+    </article>
+
+    <aside class="about-card">
+        <h3>Hızlı Bilgi</h3>
+        <dl>
+            <dt>Konum</dt><dd>@PortfolioData.Location</dd>
+            <dt>Okul</dt><dd>@PortfolioData.EducationSchool</dd>
+            <dt>Bölüm</dt><dd>@PortfolioData.EducationProgram</dd>
+            <dt>GPA</dt><dd>@PortfolioData.EducationGpa</dd>
+            <dt>Dönem</dt><dd>@PortfolioData.EducationPeriod</dd>
+        </dl>
+    </aside>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Deneyim</h2>
+    <div class="timeline">
+        @foreach (var exp in PortfolioData.Experiences)
+        {
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-head">
+                        <h3>@exp.Role <span class="at">@@@exp.Company</span></h3>
+                        <span class="period">@exp.Period</span>
+                    </div>
+                    <ul>
+                        @foreach (var h in exp.Highlights)
+                        {
+                            <li>@h</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Ödüller & Sertifikalar</h2>
+    <ul class="chip-list">
+        @foreach (var a in PortfolioData.Achievements)
+        {
+            <li class="chip">@a</li>
+        }
+    </ul>
+</section>
