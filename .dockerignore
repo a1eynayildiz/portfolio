@@ -1,0 +1,13 @@
+﻿bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.log
+Properties/launchSettings.json
+README.md
+DEPLOY.md
+Dockerfile
+.dockerignore
+.git/
+.gitignore
