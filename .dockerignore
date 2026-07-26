@@ -7,7 +7,5 @@ obj/
 Properties/launchSettings.json
 README.md
 DEPLOY.md
-Dockerfile
-.dockerignore
 .git/
 .gitignore
