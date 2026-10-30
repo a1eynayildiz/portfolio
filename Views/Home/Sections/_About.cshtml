@@ -1,0 +1,43 @@
+<section id="hakkimda" class="section" aria-labelledby="hakkimda-baslik">
+    <div class="container">
+        <header class="section-head" data-reveal>
+            <p class="eyebrow">01 / Hakkımda</p>
+            <h2 id="hakkimda-baslik">Kimim, ne yapıyorum?</h2>
+        </header>
+
+        <div class="about-grid">
+            <div class="about-text" data-reveal>
+                @foreach (var paragraph in PortfolioData.AboutParagraphs)
+                {
+                    <p>@paragraph</p>
+                }
+            </div>
+
+            <aside class="card facts" data-reveal aria-label="Hızlı bilgiler">
+                <h3>Hızlı Bilgiler</h3>
+                <dl>
+                    <div><dt>Konum</dt><dd>@PortfolioData.Location</dd></div>
+                    <div><dt>Okul</dt><dd>@PortfolioData.EducationSchool</dd></div>
+                    <div><dt>Bölüm</dt><dd>@PortfolioData.EducationProgram</dd></div>
+                    <div><dt>Dönem</dt><dd>@PortfolioData.EducationPeriod</dd></div>
+                    <div><dt>GPA</dt><dd>@PortfolioData.EducationGpa</dd></div>
+                </dl>
+            </aside>
+        </div>
+
+        <div class="skills" data-reveal>
+            @foreach (var group in PortfolioData.Skills)
+            {
+                <div class="skill-group">
+                    <h3>@group.Key</h3>
+                    <ul class="tags">
+                        @foreach (var skill in group.Value)
+                        {
+                            <li class="tag">@skill</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</section>

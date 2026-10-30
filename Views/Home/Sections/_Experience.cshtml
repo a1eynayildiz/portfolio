@@ -1,0 +1,63 @@
+@model List<Experience>
+
+<section id="deneyim" class="section" aria-labelledby="deneyim-baslik">
+    <div class="container">
+        <header class="section-head" data-reveal>
+            <p class="eyebrow">03 / Staj Deneyimlerim</p>
+            <h2 id="deneyim-baslik">Nerelerde çalıştım?</h2>
+        </header>
+
+        <ol class="timeline">
+            @foreach (var exp in Model)
+            {
+                <li class="timeline-item" data-reveal>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-date">
+                        <span>@exp.Period</span>
+                        @if (!string.IsNullOrWhiteSpace(exp.Kind))
+                        {
+                            <span class="muted">@exp.Kind</span>
+                        }
+                    </div>
+                    <article class="card timeline-card">
+                        <h3>
+                            @exp.Role
+                            <span class="timeline-company">
+                                @if (!string.IsNullOrWhiteSpace(exp.CompanyUrl))
+                                {
+                                    <a href="@exp.CompanyUrl" target="_blank" rel="noopener noreferrer">@exp.Company</a>
+                                }
+                                else
+                                {
+                                    @exp.Company
+                                }
+                            </span>
+                        </h3>
+                        @if (!string.IsNullOrWhiteSpace(exp.Context))
+                        {
+                            <p class="timeline-context">@exp.Context</p>
+                        }
+                        <ul class="detail-list">
+                            @foreach (var h in exp.Highlights)
+                            {
+                                <li>@h</li>
+                            }
+                        </ul>
+                        @if (exp.Skills.Count > 0)
+                        {
+                            <div class="timeline-skills">
+                                <span class="label">Kazanımlar</span>
+                                <ul class="tags tags-sm">
+                                    @foreach (var s in exp.Skills)
+                                    {
+                                        <li class="tag">@s</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </article>
+                </li>
+            }
+        </ol>
+    </div>
+</section>

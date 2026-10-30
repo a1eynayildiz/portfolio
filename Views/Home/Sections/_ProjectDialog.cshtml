@@ -1,0 +1,96 @@
+@model Project
+@{
+    // "Proje Linki" canlı demoya gider; demo yoksa GitHub deposuna gider.
+    var primaryUrl = Model.DemoUrl ?? Model.RepoUrl;
+    var primaryLabel = Model.DemoUrl is not null ? "Proje Linki (Canlı Demo)" : "Proje Linki (GitHub)";
+    var showRepoSeparately = Model.DemoUrl is not null && Model.RepoUrl is not null;
+    var titleId = $"proje-{Model.Slug}-baslik";
+}
+
+<dialog class="project-dialog" id="proje-@Model.Slug" data-project-dialog="@Model.Slug" aria-labelledby="@titleId">
+    <div class="dialog-panel">
+        <button type="button" class="icon-btn dialog-close" data-dialog-close aria-label="Kapat">@Icons.Get("x", 22)</button>
+
+        <div class="dialog-cover">
+            <img src="@Model.CoverImage" alt="@Model.CoverAlt" width="1600" height="900" loading="lazy" decoding="async" />
+        </div>
+
+        <div class="dialog-body">
+            <partial name="Sections/_ProjectBadges" model="Model" />
+            <h2 id="@titleId">@Model.Name</h2>
+            <p class="dialog-tagline">@Model.Tagline</p>
+            @if (!string.IsNullOrWhiteSpace(Model.Meta))
+            {
+                <p class="dialog-meta">@Model.Meta</p>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Problem))
+            {
+                <section class="detail-block">
+                    <h3>Problem</h3>
+                    <p>@Model.Problem</p>
+                </section>
+            }
+
+            <section class="detail-block">
+                <h3>Çözüm</h3>
+                <p>@Model.Solution</p>
+            </section>
+
+            <section class="detail-block">
+                <h3>Teknolojiler</h3>
+                <ul class="tags">
+                    @foreach (var t in Model.Tech)
+                    {
+                        <li class="tag">@t</li>
+                    }
+                </ul>
+            </section>
+
+            @if (Model.Contributions.Count > 0)
+            {
+                <section class="detail-block">
+                    <h3>Benim Katkım</h3>
+                    <ul class="detail-list">
+                        @foreach (var c in Model.Contributions)
+                        {
+                            <li>@c</li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            @if (Model.Results.Count > 0)
+            {
+                <section class="detail-block">
+                    <h3>Sonuçlar</h3>
+                    <ul class="detail-list">
+                        @foreach (var r in Model.Results)
+                        {
+                            <li>@r</li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            <div class="dialog-actions">
+                @if (primaryUrl is not null)
+                {
+                    <a href="@primaryUrl" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        @primaryLabel @Icons.Get("arrow-up-right", 18)
+                    </a>
+                    @if (showRepoSeparately)
+                    {
+                        <a href="@Model.RepoUrl" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            @Icons.Get("github", 18) GitHub Deposu
+                        </a>
+                    }
+                }
+                else
+                {
+                    <p class="muted">Kaynak kod gizlidir; talep üzerine gösterilebilir.</p>
+                }
+            </div>
+        </div>
+    </div>
+</dialog>

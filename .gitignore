@@ -1,5 +1,9 @@
-﻿bin/
+bin/
 obj/
 .vs/
+.vscode/
+.idea/
 *.user
 *.log
+appsettings.*.local.json
+.env

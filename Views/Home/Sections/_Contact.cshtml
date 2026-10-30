@@ -1,0 +1,101 @@
+@{
+    var contactEnabled = ViewData["ContactEnabled"] as bool? ?? false;
+    var flashMessage = TempData["ContactMessage"] as string;
+    var flashOk = TempData["ContactOk"] as bool? ?? false;
+}
+
+<section id="iletisim" class="section section-contact" aria-labelledby="iletisim-baslik">
+    <div class="container">
+        <header class="section-head section-head-center" data-reveal>
+            <p class="eyebrow">05 / İletişim</p>
+            <h2 id="iletisim-baslik">Birlikte çalışalım</h2>
+            <p class="section-sub">Staj, yarı zamanlı pozisyon veya proje iş birliği için benimle iletişime geçebilirsiniz.</p>
+        </header>
+
+        <div class="contact-grid">
+            <div class="contact-direct" data-reveal>
+                <div class="card email-card">
+                    <span class="label">E-posta</span>
+                    <div class="email-row">
+                        <a href="mailto:@PortfolioData.Email" class="email-link">@PortfolioData.Email</a>
+                        <button type="button" class="icon-btn" data-copy="@PortfolioData.Email" aria-label="E-posta adresini kopyala">
+                            @Icons.Get("copy", 18, "icon-copy")
+                            @Icons.Get("check", 18, "icon-check")
+                        </button>
+                    </div>
+                    <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
+                </div>
+
+                <ul class="contact-links">
+                    <li><a href="@PortfolioData.LinkedIn" target="_blank" rel="noopener noreferrer">@Icons.Get("linkedin") <span>LinkedIn</span><span class="muted">linkedin.com/in/aleynayildiz1</span></a></li>
+                    <li><a href="@PortfolioData.Github" target="_blank" rel="noopener noreferrer">@Icons.Get("github") <span>GitHub</span><span class="muted">github.com/a1eynayildiz</span></a></li>
+                    <li><a href="@PortfolioData.Medium" target="_blank" rel="noopener noreferrer">@Icons.Get("pen") <span>Medium</span><span class="muted">medium.com/@@aleynayildizz</span></a></li>
+                    <li class="contact-location">@Icons.Get("map-pin") <span>Konum</span><span class="muted">@PortfolioData.Location</span></li>
+                </ul>
+
+                @if (!string.IsNullOrWhiteSpace(PortfolioData.CvUrl))
+                {
+                    <a href="@PortfolioData.CvUrl" class="btn btn-secondary" target="_blank" rel="noopener">@Icons.Get("download", 18) CV İndir</a>
+                }
+            </div>
+
+            @if (contactEnabled)
+            {
+                <form class="card contact-form" method="post" action="/iletisim" data-contact-form novalidate data-reveal>
+                    @Html.AntiForgeryToken()
+                    <h3>Mesaj gönderin</h3>
+
+                    <div class="field">
+                        <label for="cf-name">Ad Soyad</label>
+                        <input id="cf-name" name="Name" type="text" autocomplete="name" required minlength="2" maxlength="80" aria-describedby="cf-name-error" />
+                        <p class="field-error" id="cf-name-error" data-error-for="name"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="cf-email">E-posta</label>
+                        <input id="cf-email" name="Email" type="email" autocomplete="email" required maxlength="254" aria-describedby="cf-email-error" />
+                        <p class="field-error" id="cf-email-error" data-error-for="email"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="cf-subject">Konu</label>
+                        <select id="cf-subject" name="Subject" required aria-describedby="cf-subject-error">
+                            <option value="" selected disabled>Bir konu seçin</option>
+                            @foreach (var s in ContactForm.Subjects)
+                            {
+                                <option value="@s">@s</option>
+                            }
+                        </select>
+                        <p class="field-error" id="cf-subject-error" data-error-for="subject"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="cf-message">Mesaj</label>
+                        <textarea id="cf-message" name="Message" rows="5" required minlength="10" maxlength="2000" aria-describedby="cf-message-error"></textarea>
+                        <p class="field-error" id="cf-message-error" data-error-for="message"></p>
+                    </div>
+
+                    @* Tuzak alan: ekran okuyuculardan ve klavyeden gizlidir; yalnızca botlar doldurur. *@
+                    <div class="hp" aria-hidden="true">
+                        <label for="cf-website">Web siteniz</label>
+                        <input id="cf-website" name="Website" type="text" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" data-submit>
+                        <span data-submit-label>Gönder</span>
+                    </button>
+
+                    <p class="form-status @(flashMessage is null ? "" : flashOk ? "is-ok" : "is-error")" role="status" aria-live="polite" data-form-status>@flashMessage</p>
+                </form>
+            }
+            else
+            {
+                <div class="card contact-fallback" data-reveal>
+                    <h3>Mesaj gönderin</h3>
+                    <p>En hızlı yol, yukarıdaki adrese doğrudan e-posta göndermektir. Genellikle kısa sürede dönüş yapıyorum.</p>
+                    <a href="mailto:@PortfolioData.Email" class="btn btn-primary">@Icons.Get("mail", 18) E-posta Gönder</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>

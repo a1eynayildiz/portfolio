@@ -1,0 +1,49 @@
+<section id="anasayfa" class="hero" aria-labelledby="hero-title">
+    <div class="container hero-inner">
+        <div class="hero-content" data-reveal>
+            <p class="eyebrow">Merhaba, ben</p>
+            <h1 id="hero-title" class="hero-title">@PortfolioData.FullName</h1>
+            <p class="hero-role">@PortfolioData.Title · Bilgisayar Mühendisliği Öğrencisi</p>
+            <p class="hero-intro">@PortfolioData.HeroIntro</p>
+
+            <div class="hero-actions">
+                <a href="#projeler" class="btn btn-primary">Projelerimi Gör @Icons.Get("arrow-right", 18)</a>
+                @if (!string.IsNullOrWhiteSpace(PortfolioData.CvUrl))
+                {
+                    <a href="@PortfolioData.CvUrl" class="btn btn-secondary" target="_blank" rel="noopener">CV İndir @Icons.Get("download", 18)</a>
+                }
+                else
+                {
+                    <a href="#iletisim" class="btn btn-secondary">İletişime Geç</a>
+                }
+            </div>
+
+            <ul class="hero-socials">
+                <li><a href="@PortfolioData.Github" class="icon-btn" target="_blank" rel="noopener noreferrer" aria-label="GitHub profili">@Icons.Get("github")</a></li>
+                <li><a href="@PortfolioData.LinkedIn" class="icon-btn" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profili">@Icons.Get("linkedin")</a></li>
+                <li><a href="@PortfolioData.Medium" class="icon-btn" target="_blank" rel="noopener noreferrer" aria-label="Medium yazıları">@Icons.Get("pen")</a></li>
+                <li><a href="mailto:@PortfolioData.Email" class="icon-btn" aria-label="E-posta gönder">@Icons.Get("mail")</a></li>
+            </ul>
+        </div>
+
+        <div class="hero-visual" data-reveal aria-hidden="true">
+            <div class="terminal">
+                <div class="terminal-bar">
+                    <span></span><span></span><span></span>
+                    <p>~/aleyna — zsh</p>
+                </div>
+                <pre class="terminal-body"><code><span class="t-cmd">$ whoami</span>
+<span class="t-out">aleyna.yildiz</span>
+<span class="t-cmd">$ cat stack.txt</span>
+<span class="t-out">C# · .NET · ASP.NET · Windows Forms</span>
+<span class="t-out">Python · Django · DRF · Celery · Redis</span>
+<span class="t-out">PostgreSQL · MSSQL · JWT · Git</span>
+<span class="t-cmd">$ current --focus</span>
+<span class="t-out">production-grade backend systems</span>
+<span class="t-cmd">$ <span class="t-caret"></span></span></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <a href="#hakkimda" class="scroll-cue" aria-label="Aşağı kaydır, Hakkımda bölümüne git">@Icons.Get("arrow-down", 20)</a>
+</section>

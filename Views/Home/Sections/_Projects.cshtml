@@ -1,0 +1,53 @@
+@model List<Project>
+@{
+    const int maxTags = 4;
+}
+
+<section id="projeler" class="section" aria-labelledby="projeler-baslik">
+    <div class="container">
+        <header class="section-head" data-reveal>
+            <p class="eyebrow">02 / Projelerim</p>
+            <h2 id="projeler-baslik">Neler geliştirdim?</h2>
+            <p class="section-sub">Backend odaklı, üretim mantığıyla kurgulanmış seçili projeler. Ayrıntıları görmek için bir projeye tıklayın.</p>
+        </header>
+
+        <div class="projects-grid">
+            @foreach (var p in Model)
+            {
+                <article class="card project-card @(p.Featured ? "is-featured" : "")" data-reveal>
+                    <div class="project-cover">
+                        <img src="@p.CoverImage" alt="@p.CoverAlt" width="1600" height="900" loading="lazy" decoding="async" />
+                    </div>
+                    <div class="project-body">
+                        <partial name="Sections/_ProjectBadges" model="p" />
+                        <h3>
+                            @* Kartın tamamı bu düğme ile tıklanabilir hâle gelir (CSS ile genişletilir). *@
+                            <a href="#projeler/@p.Slug" class="project-open" data-project-open="@p.Slug"
+                               aria-haspopup="dialog">@p.Name</a>
+                        </h3>
+                        <p class="project-tagline">@p.Tagline</p>
+                        <p class="project-summary">@p.Summary</p>
+                        <ul class="tags tags-sm" aria-label="Kullanılan teknolojiler">
+                            @foreach (var t in p.Tech.Take(maxTags))
+                            {
+                                <li class="tag">@t</li>
+                            }
+                            @if (p.Tech.Count > maxTags)
+                            {
+                                <li class="tag tag-more" aria-label="@(p.Tech.Count - maxTags) teknoloji daha">+@(p.Tech.Count - maxTags)</li>
+                            }
+                        </ul>
+                        <span class="project-more" aria-hidden="true">Detayları Gör @Icons.Get("arrow-right", 16)</span>
+                    </div>
+                </article>
+            }
+        </div>
+
+        <div class="more-on-github" data-reveal>
+            <p>Daha fazlası GitHub'da: farklı diller ve deneysel projeler.</p>
+            <a href="@PortfolioData.Github" class="btn btn-secondary btn-sm" target="_blank" rel="noopener noreferrer">
+                @Icons.Get("github", 18) github.com/a1eynayildiz
+            </a>
+        </div>
+    </div>
+</section>

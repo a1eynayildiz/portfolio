@@ -1,49 +1,109 @@
+@{
+    var pageTitle = ViewData["Title"] as string ?? $"{PortfolioData.FullName} – {PortfolioData.Title} | Portfolyo";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+    const string description =
+        "Düzce Üniversitesi Bilgisayar Mühendisliği son sınıf öğrencisi Aleyna Yıldız'ın portfolyosu. " +
+        "C#/.NET ve Django ile geliştirdiği projeler, staj deneyimleri ve iletişim bilgileri.";
+}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] · Aleyna Yıldız</title>
-    <meta name="description" content="Aleyna Yıldız — Back-End Geliştirici. C#, .NET, Python, Django ve PostgreSQL ile üretim ortamına dokunan işler." />
+    <title>@pageTitle</title>
+    <meta name="description" content="@description" />
+    <meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B0F17" media="(prefers-color-scheme: dark)" />
+    <link rel="canonical" href="@siteUrl/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:title" content="@PortfolioData.FullName – @PortfolioData.Title" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:url" content="@siteUrl/" />
+    <meta property="og:image" content="@siteUrl/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="~/favicon.svg" type="image/svg+xml" />
+
+    @* Tema, sayfa çizilmeden önce uygulanır; böylece açılışta renk sıçraması olmaz. *@
+    <script>
+        (function () {
+            var t = null;
+            try { t = localStorage.getItem('theme'); } catch (e) { }
+            if (t !== 'light' && t !== 'dark') {
+                t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', t);
+            document.documentElement.classList.add('js');
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">@Json.Serialize(new Dictionary<string, object>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "Person",
+        ["name"] = PortfolioData.FullName,
+        ["jobTitle"] = PortfolioData.Title,
+        ["url"] = siteUrl + "/",
+        ["alumniOf"] = new Dictionary<string, string> { ["@type"] = "CollegeOrUniversity", ["name"] = PortfolioData.EducationSchool },
+        ["sameAs"] = new[] { PortfolioData.Github, PortfolioData.LinkedIn, PortfolioData.Medium }
+    })</script>
 </head>
 <body>
-    <div class="bg-glow"></div>
+    <a class="skip-link" href="#icerik">İçeriğe geç</a>
+    <div class="progress" aria-hidden="true"><span></span></div>
 
-    <header class="site-header">
-        <nav class="container nav">
-            <a class="brand" asp-controller="Home" asp-action="Index">
-                <span class="brand-mark">AY</span>
-                <span class="brand-name">Aleyna Yıldız</span>
+    <header class="site-header" data-header>
+        <nav class="container nav" aria-label="Ana menü">
+            <a class="brand" href="#anasayfa" aria-label="@PortfolioData.FullName, sayfanın başına git">
+                <span class="brand-mark" aria-hidden="true">AY</span>
+                <span class="brand-name">@PortfolioData.FullName</span>
             </a>
-            <button class="nav-toggle" aria-label="Menü" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-links">
-                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
-                <li><a asp-controller="Home" asp-action="About">Hakkımda</a></li>
-                <li><a asp-controller="Home" asp-action="Projects">Projeler</a></li>
-                <li><a href="@PortfolioData.Github" target="_blank" rel="noopener" class="nav-cta">GitHub</a></li>
+
+            <ul class="nav-links" id="nav-links" data-nav-links>
+                <li><a href="#anasayfa" data-nav="anasayfa">Anasayfa</a></li>
+                <li><a href="#hakkimda" data-nav="hakkimda">Hakkımda</a></li>
+                <li><a href="#projeler" data-nav="projeler">Projeler</a></li>
+                <li class="nav-links-cta"><a href="#iletisim" class="btn btn-primary btn-sm">İletişime geç</a></li>
             </ul>
+
+            <div class="nav-actions">
+                <button type="button" class="icon-btn" data-theme-toggle aria-label="Koyu temaya geç">
+                    @Icons.Get("moon", 20, "icon-moon")
+                    @Icons.Get("sun", 20, "icon-sun")
+                </button>
+                <a href="#iletisim" class="btn btn-primary btn-sm nav-cta">İletişime geç</a>
+                <button type="button" class="icon-btn nav-toggle" data-nav-toggle
+                        aria-controls="nav-links" aria-expanded="false" aria-label="Menüyü aç">
+                    @Icons.Get("menu", 22, "icon-menu")
+                    @Icons.Get("x", 22, "icon-close")
+                </button>
+            </div>
         </nav>
     </header>
 
-    <main class="container">
+    <main id="icerik" tabindex="-1">
         @RenderBody()
     </main>
 
     <footer class="site-footer">
         <div class="container footer-inner">
-            <p>© @DateTime.Now.Year Aleyna Yıldız · Backend Developer</p>
-            <div class="socials">
-                <a href="@PortfolioData.Github" target="_blank" rel="noopener">GitHub</a>
-                <a href="@PortfolioData.LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="@PortfolioData.Medium" target="_blank" rel="noopener">Medium</a>
-                <a href="mailto:@PortfolioData.Email">E-posta</a>
-            </div>
+            <p>© @DateTime.Now.Year @PortfolioData.FullName</p>
+            <ul class="footer-socials">
+                <li><a href="@PortfolioData.Github" target="_blank" rel="noopener noreferrer" aria-label="GitHub profili">@Icons.Get("github", 18)</a></li>
+                <li><a href="@PortfolioData.LinkedIn" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profili">@Icons.Get("linkedin", 18)</a></li>
+                <li><a href="@PortfolioData.Medium" target="_blank" rel="noopener noreferrer" aria-label="Medium yazıları">@Icons.Get("pen", 18)</a></li>
+                <li><a href="mailto:@PortfolioData.Email" aria-label="E-posta gönder">@Icons.Get("mail", 18)</a></li>
+            </ul>
+            <a class="to-top" href="#anasayfa">Yukarı dön @Icons.Get("arrow-up", 16)</a>
         </div>
     </footer>
 
