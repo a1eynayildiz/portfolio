@@ -13,8 +13,22 @@ builder.Services.AddControllersWithViews();
 builder.Services.Configure<WebEncoderOptions>(options =>
     options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All));
 
+// İletişim formu: Resend API anahtarı tanımlıysa Resend (HTTPS) kullanılır; değilse SMTP ayarlarına bakılır.
+// Render'ın ücretsiz planında SMTP portları kapalı olduğu için orada Resend gerekir.
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(SmtpOptions.SectionName));
-builder.Services.AddSingleton<IContactMailer, SmtpContactMailer>();
+builder.Services.Configure<ResendOptions>(builder.Configuration.GetSection(ResendOptions.SectionName));
+builder.Services.AddHttpClient(ResendContactMailer.HttpClientName, client =>
+{
+    client.BaseAddress = new Uri("https://api.resend.com/");
+    client.Timeout = TimeSpan.FromSeconds(15);
+});
+builder.Services.AddSingleton<SmtpContactMailer>();
+builder.Services.AddSingleton<ResendContactMailer>();
+builder.Services.AddSingleton<IContactMailer>(sp =>
+{
+    var resend = sp.GetRequiredService<ResendContactMailer>();
+    return resend.IsConfigured ? resend : sp.GetRequiredService<SmtpContactMailer>();
+});
 
 builder.Services.AddRateLimiter(options =>
 {
