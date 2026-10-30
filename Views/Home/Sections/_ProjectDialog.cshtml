@@ -2,9 +2,10 @@
 @{
     // "Proje Linki" canlı demoya gider; demo yoksa GitHub deposuna gider.
     var primaryUrl = Model.DemoUrl ?? Model.RepoUrl;
-    var primaryLabel = Model.DemoUrl is not null ? "Proje Linki (Canlı Demo)" : "Proje Linki (GitHub)";
+    var primaryLabel = Model.DemoUrl is not null ? "Proje Linki (canlı demo)" : "Proje Linki (GitHub)";
     var showRepoSeparately = Model.DemoUrl is not null && Model.RepoUrl is not null;
     var titleId = $"proje-{Model.Slug}-baslik";
+    var facts = Model.Facts.ToList();
 }
 
 <dialog class="project-dialog" id="proje-@Model.Slug" data-project-dialog="@Model.Slug" aria-labelledby="@titleId">
@@ -16,12 +17,17 @@
         </div>
 
         <div class="dialog-body">
-            <partial name="Sections/_ProjectBadges" model="Model" />
             <h2 id="@titleId">@Model.Name</h2>
             <p class="dialog-tagline">@Model.Tagline</p>
-            @if (!string.IsNullOrWhiteSpace(Model.Meta))
+
+            @if (facts.Count > 0)
             {
-                <p class="dialog-meta">@Model.Meta</p>
+                <dl class="dialog-facts">
+                    @foreach (var (label, value) in facts)
+                    {
+                        <div><dt>@label</dt><dd>@value</dd></div>
+                    }
+                </dl>
             }
 
             @if (!string.IsNullOrWhiteSpace(Model.Problem))
@@ -37,20 +43,10 @@
                 <p>@Model.Solution</p>
             </section>
 
-            <section class="detail-block">
-                <h3>Teknolojiler</h3>
-                <ul class="tags">
-                    @foreach (var t in Model.Tech)
-                    {
-                        <li class="tag">@t</li>
-                    }
-                </ul>
-            </section>
-
             @if (Model.Contributions.Count > 0)
             {
                 <section class="detail-block">
-                    <h3>Benim Katkım</h3>
+                    <h3>Benim katkım</h3>
                     <ul class="detail-list">
                         @foreach (var c in Model.Contributions)
                         {
@@ -73,6 +69,16 @@
                 </section>
             }
 
+            <section class="detail-block">
+                <h3>Teknolojiler</h3>
+                <ul class="tags">
+                    @foreach (var t in Model.Tech)
+                    {
+                        <li class="tag">@t</li>
+                    }
+                </ul>
+            </section>
+
             <div class="dialog-actions">
                 @if (primaryUrl is not null)
                 {
@@ -82,13 +88,13 @@
                     @if (showRepoSeparately)
                     {
                         <a href="@Model.RepoUrl" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                            @Icons.Get("github", 18) GitHub Deposu
+                            @Icons.Get("github", 18) GitHub deposu
                         </a>
                     }
                 }
                 else
                 {
-                    <p class="muted">Kaynak kod gizlidir; talep üzerine gösterilebilir.</p>
+                    <p class="source-note">@Icons.Get("lock", 18) @(Model.SourceNote ?? "Bu projenin kaynak kodu paylaşılmamaktadır.")</p>
                 }
             </div>
         </div>

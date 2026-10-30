@@ -18,6 +18,10 @@ public class Experience
     /// <summary>Kazanımlar; etiket olarak gösterilir.</summary>
     public List<string> Skills { get; set; } = new();
 
+    /// <summary>Dönemin bittiği yıl; giriş bölümündeki kariyer rotasında kullanılır.</summary>
+    public string Year =>
+        System.Text.RegularExpressions.Regex.Matches(Period, @"\d{4}") is { Count: > 0 } m ? m[^1].Value : string.Empty;
+
     /// <summary>true ise deneyim sitede gösterilmez.</summary>
     public bool IsDraft { get; set; }
 }

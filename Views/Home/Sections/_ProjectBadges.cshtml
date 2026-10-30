@@ -1,18 +1,14 @@
 @model Project
-@if (!string.IsNullOrWhiteSpace(Model.Type) || !string.IsNullOrWhiteSpace(Model.Status) || Model.Featured)
+@if (!string.IsNullOrWhiteSpace(Model.Type) || !string.IsNullOrWhiteSpace(Model.Status))
 {
-    <div class="badges">
-        @if (Model.Featured)
-        {
-            <span class="badge badge-accent">Öne Çıkan</span>
-        }
+    <p class="badges">
         @if (!string.IsNullOrWhiteSpace(Model.Type))
         {
             <span class="badge">@Model.Type</span>
         }
         @if (!string.IsNullOrWhiteSpace(Model.Status))
         {
-            <span class="badge @(Model.Status == "Canlı" ? "badge-success" : "")">@Model.Status</span>
+            <span class="badge @(Model.Status == "Canlı" ? "badge-live" : "")">@Model.Status</span>
         }
-    </div>
+    </p>
 }

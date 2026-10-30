@@ -6,7 +6,6 @@
     var root = document.documentElement;
     var body = document.body;
     var header = document.querySelector('[data-header]');
-    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     root.classList.add('js');
 
@@ -38,17 +37,12 @@
         if (!stored) applyTheme(e.matches ? 'dark' : 'light', false);
     });
 
-    /* ---------- Kaydırma: başlık zemini ve ilerleme çubuğu ---------- */
-    var progress = document.querySelector('.progress span');
+    /* ---------- Kaydırma: başlık zemini ---------- */
     var ticking = false;
 
     function onScroll() {
         var y = window.scrollY;
         if (header) header.classList.toggle('is-scrolled', y > 16);
-        if (progress) {
-            var max = document.documentElement.scrollHeight - window.innerHeight;
-            progress.style.setProperty('--progress', max > 0 ? Math.min(y / max, 1) : 0);
-        }
         ticking = false;
     }
 
@@ -117,22 +111,6 @@
         document.querySelectorAll('main > section[id]').forEach(function (s) {
             sectionObserver.observe(s);
         });
-    }
-
-    /* ---------- Bölümlerin ekrana girerken belirmesi ---------- */
-    var revealEls = document.querySelectorAll('[data-reveal]');
-    if ('IntersectionObserver' in window && !reducedMotion.matches) {
-        var revealObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-        revealEls.forEach(function (el) { revealObserver.observe(el); });
-    } else {
-        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
     }
 
     /* ---------- Proje detay paneli ---------- */
@@ -370,7 +348,7 @@
                 })
                 .finally(function () {
                     submitBtn.disabled = false;
-                    submitLabel.textContent = 'Gönder';
+                    submitLabel.textContent = 'Mesajı gönder';
                 });
         });
     }

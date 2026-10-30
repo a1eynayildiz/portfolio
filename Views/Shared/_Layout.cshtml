@@ -3,7 +3,7 @@
     var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
     const string description =
         "Düzce Üniversitesi Bilgisayar Mühendisliği son sınıf öğrencisi Aleyna Yıldız'ın portfolyosu. " +
-        "C#/.NET ve Django ile geliştirdiği projeler, staj deneyimleri ve iletişim bilgileri.";
+        "C#/.NET, Django ve LLM entegrasyonuyla geliştirdiği projeler, staj deneyimleri ve iletişim bilgileri.";
 }
 <!DOCTYPE html>
 <html lang="tr">
@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@pageTitle</title>
     <meta name="description" content="@description" />
-    <meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0B0F17" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F1F4F0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E1915" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="@siteUrl/" />
 
     <meta property="og:type" content="website" />
@@ -41,9 +41,10 @@
         })();
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    @* Yazı tipleri siteyle birlikte sunulur; üçüncü taraf bir sunucuya istek atılmaz. *@
+    <link rel="preload" href="~/fonts/bricolage-grotesque-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="~/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="~/fonts/fonts.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <script type="application/ld+json">@Json.Serialize(new Dictionary<string, object>
@@ -59,12 +60,11 @@
 </head>
 <body>
     <a class="skip-link" href="#icerik">İçeriğe geç</a>
-    <div class="progress" aria-hidden="true"><span></span></div>
 
     <header class="site-header" data-header>
         <nav class="container nav" aria-label="Ana menü">
             <a class="brand" href="#anasayfa" aria-label="@PortfolioData.FullName, sayfanın başına git">
-                <span class="brand-mark" aria-hidden="true">AY</span>
+                <partial name="_Logo" />
                 <span class="brand-name">@PortfolioData.FullName</span>
             </a>
 
@@ -96,7 +96,7 @@
 
     <footer class="site-footer">
         <div class="container footer-inner">
-            <p>© @DateTime.Now.Year @PortfolioData.FullName</p>
+            <p class="footer-brand"><partial name="_Logo" /> © @DateTime.Now.Year @PortfolioData.FullName</p>
             <ul class="footer-socials">
                 <li><a href="@PortfolioData.Github" target="_blank" rel="noopener noreferrer" aria-label="GitHub profili">@Icons.Get("github", 18)</a></li>
                 <li><a href="@PortfolioData.LinkedIn" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profili">@Icons.Get("linkedin", 18)</a></li>

@@ -48,11 +48,19 @@ public class Project
     public string? RepoUrl { get; set; }
     public string? DemoUrl { get; set; }
 
-    public string Meta =>
-        string.Join(" · ", new[]
+    /// <summary>Bağlantı verilmeyen projelerde gösterilecek açıklama (örneğin şirket içi projeler).</summary>
+    public string? SourceNote { get; set; }
+
+    /// <summary>Detay panelinde künye olarak gösterilen bilgiler.</summary>
+    public IEnumerable<(string Label, string Value)> Facts
+    {
+        get
         {
-            Role,
-            Duration,
-            TeamSize is > 1 ? $"{TeamSize} kişilik ekip" : null
-        }.Where(s => !string.IsNullOrWhiteSpace(s)));
+            if (!string.IsNullOrWhiteSpace(Type)) yield return ("Tür", Type!);
+            if (!string.IsNullOrWhiteSpace(Role)) yield return ("Rol", Role!);
+            if (!string.IsNullOrWhiteSpace(Duration)) yield return ("Süre", Duration!);
+            if (TeamSize is > 1) yield return ("Ekip", $"{TeamSize} kişi");
+            if (!string.IsNullOrWhiteSpace(Status)) yield return ("Durum", Status!);
+        }
+    }
 }

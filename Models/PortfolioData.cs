@@ -22,17 +22,19 @@ public static class PortfolioData
     public const string? CvUrl = null;
 
     public const string HeroIntro =
-        "C#, .NET ve Python ile üretim ortamına dokunan backend işler yapmayı seven " +
-        "bir bilgisayar mühendisliği son sınıf öğrencisiyim.";
+        "C#, .NET ve Python ile üretim ortamına dokunan backend işler yapıyorum. " +
+        "Son olarak teknik şartnameleri yapay zekâyla analiz eden bir karar destek uygulaması geliştirdim; " +
+        "öncesinde bir CBS uygulamasının veri aktarım modüllerini yazdım.";
 
     public static readonly string[] AboutParagraphs =
     {
         "\"Bu neden böyle çalışıyor?\" sorusunun peşinden gitmeyi, backend tarafında üretim " +
         "ortamına dokunan işler yapmayı seven bir bilgisayar mühendisliği son sınıf öğrencisiyim.",
 
-        "Son deneyimlerimde PowerGIS'te C# ve PostgreSQL ile çok katmanlı bir CBS uygulamasının " +
-        "veri yükleme ve form yapılandırma modüllerini geliştirdim; öncesinde Django tarafında " +
-        "REST API tasarımı ve Celery + Redis ile asenkron görev yönetimi üzerine çalıştım.",
+        "En son Ekspa Bilgisayar'da, iki kişilik bir ekiple teknik şartname PDF'lerini büyük dil modeli (LLM) " +
+        "ile analiz eden Presales AI uygulamasını geliştirdim. PowerGIS'te C# ve PostgreSQL ile çok katmanlı " +
+        "bir CBS uygulamasının veri yükleme ve form yapılandırma modüllerini yazdım; GETAP'ta ise Django " +
+        "REST Framework ile API tasarımı ve Celery + Redis ile asenkron görev yönetimi üzerine çalıştım.",
 
         "Siber İz platformunda siber güvenlik ve web geliştirme alanlarında düzenli olarak " +
         "teknik blog yazıları yayımladım. Düzce Üniversitesi Kariyer Topluluğu - Finans " +
@@ -43,19 +45,36 @@ public static class PortfolioData
     public const string EducationSchool = "Düzce Üniversitesi";
     public const string EducationProgram = "Bilgisayar Mühendisliği (Lisans)";
     public const string EducationPeriod = "2023 — 2027";
-    public const string EducationGpa = "3.15 / 4.00";
+    public const string EducationGpa = "3.20 / 4.00";
 
     public static Dictionary<string, List<string>> Skills => new()
     {
-        ["Diller & Backend"] = new() { "C#", ".NET", "ASP.NET", "SQL", "Windows Forms", "Python", "Django REST Framework" },
-        ["Veritabanı"] = new() { "PostgreSQL", "MSSQL" },
-        ["Araçlar"] = new() { "Git", "GitHub", "Postman", "Redis", "Celery", "JWT" },
+        ["Diller ve çatılar"] = new() { "C#", ".NET", "ASP.NET", "Windows Forms", "Python", "Django", "Django REST Framework", "React", "SQL" },
+        ["Veritabanı"] = new() { "PostgreSQL", "MSSQL", "Django ORM" },
+        ["Araçlar"] = new() { "Git", "GitHub", "Docker", "Postman", "Redis", "Celery", "Celery Beat", "JWT", "Groq API" },
+        ["Kavramlar"] = new() { "RESTful API tasarımı", "Çok katmanlı mimari", "ETL", "Asenkron görevler", "LLM entegrasyonu" },
         ["Yabancı Dil"] = new() { "Türkçe (Anadil)", "İngilizce (B1+)" }
     };
 
     // ── Staj ve iş deneyimleri (en yeni en üstte) ─────────────────────────
     public static List<Experience> AllExperiences => new()
     {
+        new Experience
+        {
+            Company = "Ekspa Bilgisayar",
+            Role = "Yazılım / Bilgi Teknolojileri Stajyeri",
+            Period = "Ağustos 2026 — Eylül 2026",
+            Context = "İki kişilik bir ekiple, teknik şartname PDF'lerini analiz eden yapay zekâ destekli bir satış öncesi karar destek uygulaması (Presales AI) geliştirdik.",
+            Highlights = new()
+            {
+                "React, Django REST Framework, PostgreSQL, Groq API ve Docker ile uygulamanın geliştirilmesinde yer aldım.",
+                "Şartname maddelerinin ayrıştırılmasına, teknik kriterlerin büyük dil modeli (LLM) ile çıkarılmasına, farklı üreticilerin ürünlerinin karşılaştırılmasına ve uyumluluk puanlarının hesaplanmasına katkı sağladım.",
+                "Malzeme listesi (BOM) oluşturma, geçmiş kayıt yönetimi, Excel'e aktarma, kaynak doğrulama, önbellekleme ve hata yönetimi özelliklerini geliştirdim.",
+                "Ekip içinde görev dağılımı, sürüm kontrolü ve kod birleştirme için Git ve GitHub kullandım.",
+                "Farklı departmanlarla görüşerek şirketin iş süreçlerini, departman sorumluluklarını ve ekipler arası iş akışlarını öğrendim."
+            },
+            Skills = new() { "React", "Django REST Framework", "PostgreSQL", "Groq API", "LLM entegrasyonu", "Docker" }
+        },
         new Experience
         {
             Company = "PowerGIS",
@@ -83,22 +102,36 @@ public static class PortfolioData
                 "Django ORM ile ilişkisel veritabanı şemasını modelleyerek dinamik içerikli sayfaların üretimini sağladım; Git tabanlı akışta düzenli kod inceleme süreçlerine dahil oldum."
             },
             Skills = new() { "Python", "Django", "Django REST Framework", "Django ORM", "Git", "Kod inceleme" }
-        },
-        new Experience
-        {
-            // TASLAK: Pozisyon, tarih ve katkıları doldurup IsDraft = false yapın.
-            Company = "Ekspa Bilgisayar",
-            Role = "[Pozisyon]",
-            Period = "[Başlangıç — Bitiş]",
-            Context = "[Şirketin ne yaptığı ve hangi ekipte çalıştığın]",
-            Highlights = new() { "[Somut bir katkı, eylem fiiliyle başlayan bir cümle]" },
-            IsDraft = true
         }
     };
 
     // ── Projeler ──────────────────────────────────────────────────────────
     public static List<Project> AllProjects => new()
     {
+        new Project
+        {
+            // Kaynak kod şirkete ait olduğu için depo veya demo bağlantısı verilmez.
+            Slug = "presales-ai",
+            Name = "Presales AI",
+            Tagline = "Yapay Zekâ Destekli Teknik Şartname Analiz Sistemi",
+            Summary = "Teknik şartname PDF'lerini LLM ile analiz edip farklı üreticilerin ürünlerini karşılaştıran, uyumluluk puanı hesaplayan karar destek uygulaması.",
+            Type = "Staj Projesi",
+            Featured = true,
+            Role = "Ekspa Bilgisayar stajı",
+            TeamSize = 2,
+            CoverImage = "/images/projects/presales-ai.svg",
+            CoverAlt = "Presales AI için şartname maddelerinin ürünlerle karşılaştırıldığı temsilî kapak görseli",
+            Problem = "Satış öncesi ekipler, ihalelerdeki teknik şartnameleri madde madde okuyup farklı üreticilerin ürünleriyle elle karşılaştırır; bu süreç uzun sürer ve zorunlu bir kriterin gözden kaçması teklifin elenmesine yol açabilir.",
+            Solution = "Şartname PDF'ini okuyup maddelerini kategorilere ayıran, ürün kriterlerini büyük dil modeliyle düzenlenebilir biçimde çıkaran ve farklı üreticilerin ürünlerini bu kriterlere göre karşılaştıran bir karar destek uygulaması.",
+            Tech = new() { "React", "Django REST Framework", "PostgreSQL", "Groq API", "LLM", "Docker" },
+            Contributions = new()
+            {
+                "Şartname maddelerinin ayrıştırılmasına ve teknik kriterlerin LLM ile çıkarılmasına katkı sağladım.",
+                "Ürün uyumluluk puanlamasını ve zorunlu kriterlere göre elenme riski değerlendirmesini geliştirdim.",
+                "Kaynak doğrulama, malzeme listesi (BOM) oluşturma, geçmiş kayıt yönetimi ve Excel'e aktarma özelliklerini ekledim."
+            },
+            SourceNote = "Bu proje şirket bünyesinde geliştirildiği için kaynak kodu paylaşılmamaktadır."
+        },
         new Project
         {
             // TASLAK: Gerçek bilgileri yazıp IsDraft = false yapın.
@@ -140,7 +173,6 @@ public static class PortfolioData
             Name = "Blog Project",
             Tagline = "Asenkron Görev Yönetimli Blog Platformu",
             Summary = "JWT kimlik doğrulamalı, çok kullanıcılı bir blog platformu; I/O yoğun işler Celery ve Redis ile arka planda çalışır.",
-            Featured = true,
             CoverImage = "/images/projects/blog-project.svg",
             CoverAlt = "Blog Project için API isteği ve görev kuyruğu temalı kapak görseli",
             Problem = "E-posta bildirimi gibi I/O yoğun işlemler istek sırasında çalıştırıldığında kullanıcı yanıt için bu işlemlerin bitmesini bekler.",

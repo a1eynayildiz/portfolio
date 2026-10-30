@@ -1,20 +1,26 @@
+@{
+    // Kariyer rotası: en eskiden en yeniye. Haritadaki üç nokta sabittir; konumlar temsilîdir.
+    var route = PortfolioData.Experiences.Take(3).Reverse().ToList();
+    var points = new[] { (X: 150, Y: 400), (X: 330, Y: 250), (X: 500, Y: 130) };
+}
+
 <section id="anasayfa" class="hero" aria-labelledby="hero-title">
     <div class="container hero-inner">
-        <div class="hero-content" data-reveal>
-            <p class="eyebrow">Merhaba, ben</p>
-            <h1 id="hero-title" class="hero-title">@PortfolioData.FullName</h1>
-            <p class="hero-role">@PortfolioData.Title · Bilgisayar Mühendisliği Öğrencisi</p>
+        <div class="hero-text">
+            <p class="hero-place">@Icons.Get("map-pin", 16) @PortfolioData.Location</p>
+            <h1 id="hero-title" class="hero-title">Aleyna<br />Yıldız</h1>
+            <p class="hero-role">Backend geliştirici, Düzce Üniversitesi Bilgisayar Mühendisliği son sınıf öğrencisi</p>
             <p class="hero-intro">@PortfolioData.HeroIntro</p>
 
             <div class="hero-actions">
-                <a href="#projeler" class="btn btn-primary">Projelerimi Gör @Icons.Get("arrow-right", 18)</a>
+                <a href="#projeler" class="btn btn-primary">Projelerimi gör</a>
                 @if (!string.IsNullOrWhiteSpace(PortfolioData.CvUrl))
                 {
-                    <a href="@PortfolioData.CvUrl" class="btn btn-secondary" target="_blank" rel="noopener">CV İndir @Icons.Get("download", 18)</a>
+                    <a href="@PortfolioData.CvUrl" class="btn btn-secondary" target="_blank" rel="noopener">@Icons.Get("download", 18) CV'mi indir</a>
                 }
                 else
                 {
-                    <a href="#iletisim" class="btn btn-secondary">İletişime Geç</a>
+                    <a href="#iletisim" class="btn btn-secondary">İletişime geç</a>
                 }
             </div>
 
@@ -26,24 +32,35 @@
             </ul>
         </div>
 
-        <div class="hero-visual" data-reveal aria-hidden="true">
-            <div class="terminal">
-                <div class="terminal-bar">
-                    <span></span><span></span><span></span>
-                    <p>~/aleyna — zsh</p>
-                </div>
-                <pre class="terminal-body"><code><span class="t-cmd">$ whoami</span>
-<span class="t-out">aleyna.yildiz</span>
-<span class="t-cmd">$ cat stack.txt</span>
-<span class="t-out">C# · .NET · ASP.NET · Windows Forms</span>
-<span class="t-out">Python · Django · DRF · Celery · Redis</span>
-<span class="t-out">PostgreSQL · MSSQL · JWT · Git</span>
-<span class="t-cmd">$ current --focus</span>
-<span class="t-out">production-grade backend systems</span>
-<span class="t-cmd">$ <span class="t-caret"></span></span></code></pre>
-            </div>
-        </div>
-    </div>
+        <figure class="hero-map" aria-labelledby="hero-map-caption">
+            <div class="map-canvas">
+                <partial name="Sections/_Topo" />
 
-    <a href="#hakkimda" class="scroll-cue" aria-label="Aşağı kaydır, Hakkımda bölümüne git">@Icons.Get("arrow-down", 20)</a>
+                <svg class="route" viewBox="0 0 640 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path class="route-line" pathLength="1"
+                          d="M@(points[0].X) @(points[0].Y) C 220 360, 250 280, @(points[1].X) @(points[1].Y) S 440 150, @(points[2].X) @(points[2].Y)" />
+                </svg>
+
+                <ol class="pins">
+                    @for (var i = 0; i < route.Count; i++)
+                    {
+                        var exp = route[i];
+                        var p = points[i];
+                        var isLatest = i == route.Count - 1;
+                        <li class="pin @(isLatest ? "is-latest" : "")"
+                            style="--x: @((p.X / 640.0 * 100).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%; --y: @((p.Y / 560.0 * 100).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%; --i: @i">
+                            <a href="#deneyim">
+                                <span class="pin-dot" aria-hidden="true"></span>
+                                <span class="pin-label">
+                                    <strong>@exp.Company</strong>
+                                    <span>@exp.Year</span>
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ol>
+            </div>
+            <figcaption id="hero-map-caption">Kariyer rotam, ilk stajımdan bugüne</figcaption>
+        </figure>
+    </div>
 </section>

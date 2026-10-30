@@ -2,27 +2,27 @@
 
 <section id="deneyim" class="section" aria-labelledby="deneyim-baslik">
     <div class="container">
-        <header class="section-head" data-reveal>
-            <p class="eyebrow">03 / Staj Deneyimlerim</p>
-            <h2 id="deneyim-baslik">Nerelerde çalıştım?</h2>
-        </header>
+        <div class="section-head">
+            <h2 id="deneyim-baslik" class="section-title">Staj deneyimlerim</h2>
+            <p class="section-lead">En yeniden en eskiye.</p>
+        </div>
 
-        <ol class="timeline">
+        <ol class="route-list">
             @foreach (var exp in Model)
             {
-                <li class="timeline-item" data-reveal>
-                    <span class="timeline-dot" aria-hidden="true"></span>
-                    <div class="timeline-date">
-                        <span>@exp.Period</span>
+                <li class="stop">
+                    <div class="stop-when">
+                        <span class="stop-year" aria-hidden="true">@exp.Year</span>
+                        <span class="stop-period">@exp.Period</span>
                         @if (!string.IsNullOrWhiteSpace(exp.Kind))
                         {
-                            <span class="muted">@exp.Kind</span>
+                            <span class="stop-kind">@exp.Kind</span>
                         }
                     </div>
-                    <article class="card timeline-card">
+                    <span class="stop-marker" aria-hidden="true"></span>
+                    <article class="stop-body">
                         <h3>
-                            @exp.Role
-                            <span class="timeline-company">
+                            <span class="stop-company">
                                 @if (!string.IsNullOrWhiteSpace(exp.CompanyUrl))
                                 {
                                     <a href="@exp.CompanyUrl" target="_blank" rel="noopener noreferrer">@exp.Company</a>
@@ -32,10 +32,11 @@
                                     @exp.Company
                                 }
                             </span>
+                            <span class="stop-role">@exp.Role</span>
                         </h3>
                         @if (!string.IsNullOrWhiteSpace(exp.Context))
                         {
-                            <p class="timeline-context">@exp.Context</p>
+                            <p class="stop-context">@exp.Context</p>
                         }
                         <ul class="detail-list">
                             @foreach (var h in exp.Highlights)
@@ -45,15 +46,7 @@
                         </ul>
                         @if (exp.Skills.Count > 0)
                         {
-                            <div class="timeline-skills">
-                                <span class="label">Kazanımlar</span>
-                                <ul class="tags tags-sm">
-                                    @foreach (var s in exp.Skills)
-                                    {
-                                        <li class="tag">@s</li>
-                                    }
-                                </ul>
-                            </div>
+                            <p class="stop-skills"><span>Kazanımlar:</span> @string.Join(", ", exp.Skills)</p>
                         }
                     </article>
                 </li>

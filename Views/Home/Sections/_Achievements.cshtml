@@ -2,33 +2,34 @@
 
 <section id="basarilar" class="section" aria-labelledby="basarilar-baslik">
     <div class="container">
-        <header class="section-head" data-reveal>
-            <p class="eyebrow">04 / Başarılarım</p>
-            <h2 id="basarilar-baslik">Ödüller, sertifikalar ve yazılar</h2>
-        </header>
+        <h2 id="basarilar-baslik" class="section-title">Başarılarım</h2>
 
-        <ul class="achievements-grid">
+        <ul class="achievement-list">
             @foreach (var a in Model)
             {
-                <li class="card achievement" data-reveal>
-                    <div class="achievement-head">
-                        <span class="achievement-icon">@Icons.Get(Icons.ForAchievement(a.Kind), 20)</span>
-                        <span class="achievement-kind">@a.KindLabel</span>
-                        @if (a.InProgress)
+                <li class="achievement">
+                    <span class="achievement-kind">
+                        @Icons.Get(Icons.ForAchievement(a.Kind), 18)
+                        @a.KindLabel
+                    </span>
+                    <div class="achievement-text">
+                        <h3>
+                            @a.Title
+                            @if (a.InProgress)
+                            {
+                                <span class="badge">Devam ediyor</span>
+                            }
+                        </h3>
+                        <p class="achievement-issuer">@a.Issuer@(string.IsNullOrWhiteSpace(a.Date) ? "" : $", {a.Date}")</p>
+                        @if (!string.IsNullOrWhiteSpace(a.Description))
                         {
-                            <span class="badge">Devam ediyor</span>
+                            <p class="achievement-desc">@a.Description</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(a.Url))
+                        {
+                            <a href="@a.Url" class="text-link" target="_blank" rel="noopener noreferrer">Belgeyi gör @Icons.Get("arrow-up-right", 16)</a>
                         }
                     </div>
-                    <h3>@a.Title</h3>
-                    <p class="achievement-issuer">@a.Issuer@(string.IsNullOrWhiteSpace(a.Date) ? "" : $" · {a.Date}")</p>
-                    @if (!string.IsNullOrWhiteSpace(a.Description))
-                    {
-                        <p class="achievement-desc">@a.Description</p>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(a.Url))
-                    {
-                        <a href="@a.Url" class="text-link" target="_blank" rel="noopener noreferrer">Belgeyi Gör @Icons.Get("arrow-up-right", 16)</a>
-                    }
                 </li>
             }
         </ul>

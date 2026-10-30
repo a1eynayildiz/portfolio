@@ -6,16 +6,14 @@
 
 <section id="iletisim" class="section section-contact" aria-labelledby="iletisim-baslik">
     <div class="container">
-        <header class="section-head section-head-center" data-reveal>
-            <p class="eyebrow">05 / İletişim</p>
-            <h2 id="iletisim-baslik">Birlikte çalışalım</h2>
-            <p class="section-sub">Staj, yarı zamanlı pozisyon veya proje iş birliği için benimle iletişime geçebilirsiniz.</p>
-        </header>
+        <div class="section-head">
+            <h2 id="iletisim-baslik" class="section-title">İletişim</h2>
+            <p class="section-lead">Staj, yarı zamanlı pozisyon veya proje iş birliği için yazabilirsiniz.</p>
+        </div>
 
         <div class="contact-grid">
-            <div class="contact-direct" data-reveal>
-                <div class="card email-card">
-                    <span class="label">E-posta</span>
+            <div class="contact-direct">
+                <div class="email-block">
                     <div class="email-row">
                         <a href="mailto:@PortfolioData.Email" class="email-link">@PortfolioData.Email</a>
                         <button type="button" class="icon-btn" data-copy="@PortfolioData.Email" aria-label="E-posta adresini kopyala">
@@ -35,13 +33,13 @@
 
                 @if (!string.IsNullOrWhiteSpace(PortfolioData.CvUrl))
                 {
-                    <a href="@PortfolioData.CvUrl" class="btn btn-secondary" target="_blank" rel="noopener">@Icons.Get("download", 18) CV İndir</a>
+                    <a href="@PortfolioData.CvUrl" class="btn btn-secondary" target="_blank" rel="noopener">@Icons.Get("download", 18) CV'mi indir</a>
                 }
             </div>
 
             @if (contactEnabled)
             {
-                <form class="card contact-form" method="post" action="/iletisim" data-contact-form novalidate data-reveal>
+                <form class="contact-form" method="post" action="/iletisim" data-contact-form novalidate>
                     @Html.AntiForgeryToken()
                     <h3>Mesaj gönderin</h3>
 
@@ -82,7 +80,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block" data-submit>
-                        <span data-submit-label>Gönder</span>
+                        <span data-submit-label>Mesajı gönder</span>
                     </button>
 
                     <p class="form-status @(flashMessage is null ? "" : flashOk ? "is-ok" : "is-error")" role="status" aria-live="polite" data-form-status>@flashMessage</p>
@@ -90,10 +88,10 @@
             }
             else
             {
-                <div class="card contact-fallback" data-reveal>
+                <div class="contact-fallback">
                     <h3>Mesaj gönderin</h3>
-                    <p>En hızlı yol, yukarıdaki adrese doğrudan e-posta göndermektir. Genellikle kısa sürede dönüş yapıyorum.</p>
-                    <a href="mailto:@PortfolioData.Email" class="btn btn-primary">@Icons.Get("mail", 18) E-posta Gönder</a>
+                    <p>Bana en hızlı e-posta ile ulaşabilirsiniz.</p>
+                    <a href="mailto:@PortfolioData.Email" class="btn btn-primary">@Icons.Get("mail", 18) E-posta gönder</a>
                 </div>
             }
         </div>
